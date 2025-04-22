@@ -10,6 +10,12 @@ export type TidePoint = {
 // This is a mock tide predictor for our MVP
 // In a real app, we would use a tide prediction API or a more accurate algorithm
 export const predictTides = (date: Date, location: Location): TidePoint[] => {
+  // Validate the date is a valid date object
+  if (!(date instanceof Date) || isNaN(date.getTime())) {
+    console.error("Invalid date provided to predictTides:", date);
+    return [];
+  }
+
   const result: TidePoint[] = [];
   const dateStr = date.toISOString().split('T')[0];
   
