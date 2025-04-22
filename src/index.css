@@ -5,7 +5,7 @@
 
 @layer base {
   :root {
-    --background: 222 47% 11%;
+    --background: 220 33% 11%;
     --foreground: 210 40% 98%;
 
     --card: 224 71% 4%;
@@ -14,7 +14,7 @@
     --popover: 224 71% 4%;
     --popover-foreground: 215 20.2% 65.1%;
 
-    --primary: 260 60% 75%;
+    --primary: 260 40% 75%;
     --primary-foreground: 222.2 47.4% 11.2%;
 
     --secondary: 217.2 32.6% 17.5%;
@@ -33,7 +33,7 @@
     --input: 217.2 32.6% 17.5%;
     --ring: 224.3 76.3% 48%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
   }
 }
 
@@ -44,23 +44,23 @@
 
   body {
     @apply bg-ocean-dark text-foreground;
-    background-image: radial-gradient(circle at 80% 20%, rgba(155, 135, 245, 0.15) 0%, transparent 50%),
-                     radial-gradient(circle at 20% 80%, rgba(14, 165, 233, 0.15) 0%, transparent 50%);
+    background-image: radial-gradient(circle at 80% 20%, rgba(155, 135, 245, 0.08) 0%, transparent 50%),
+                     radial-gradient(circle at 20% 80%, rgba(14, 165, 233, 0.08) 0%, transparent 50%);
     background-attachment: fixed;
   }
 }
 
 @layer components {
   .calendar-day {
-    @apply relative flex flex-col items-center justify-center p-2 border border-border/30 rounded-md transition-colors;
+    @apply relative flex flex-col items-center justify-center p-2 border border-border/20 rounded-lg transition-colors bg-background/30 backdrop-blur-sm;
   }
   
   .calendar-day:hover {
-    @apply border-moon-dark/50 bg-ocean-dark/50;
+    @apply border-moon-dark/30 bg-ocean-dark/40;
   }
   
   .calendar-day.active {
-    @apply border-moon-dark bg-gradient-to-b from-ocean-dark/80 to-ocean-dark;
+    @apply border-moon-dark/50 bg-gradient-to-b from-ocean-dark/60 to-ocean-dark/80;
   }
   
   .calendar-day .moon-phase {
@@ -68,19 +68,19 @@
   }
   
   .tide-marker {
-    @apply absolute w-1.5 h-1.5 rounded-full bg-ocean;
+    @apply absolute w-1 h-1 rounded-full bg-ocean/60;
   }
   
   .tide-marker.high {
-    @apply bg-ocean;
+    @apply bg-ocean/80;
   }
   
   .tide-marker.low {
-    @apply bg-ocean-light;
+    @apply bg-ocean-light/60;
   }
   
   .moon-glow {
     @apply absolute top-0 left-0 w-full h-full rounded-full;
-    box-shadow: 0 0 20px 2px rgba(155, 135, 245, 0.3);
+    box-shadow: 0 0 20px 2px rgba(155, 135, 245, 0.15);
   }
 }
