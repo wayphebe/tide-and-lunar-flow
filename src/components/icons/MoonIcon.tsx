@@ -14,17 +14,34 @@ export const MoonIcon = ({ className }: MoonIconProps) => {
     >
       <defs>
         <linearGradient id="moonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="currentColor" stopOpacity="0.3" />
-          <stop offset="100%" stopColor="currentColor" stopOpacity="0.8" />
+          <stop offset="0%" stopColor="currentColor" stopOpacity="0.2" />
+          <stop offset="100%" stopColor="currentColor" stopOpacity="0.6" />
         </linearGradient>
+        <clipPath id="moonClip">
+          <path d="M12 3a9 9 0 0 0 0 18c5.285 0 9-3.75 9-9s-3.715-9-9-9z" />
+        </clipPath>
       </defs>
       <path 
-        d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+        d="M12 3a9 9 0 0 0 0 18c5.285 0 9-3.75 9-9s-3.715-9-9-9z"
         fill="url(#moonGradient)"
+        clipPath="url(#moonClip)"
+        strokeWidth="1"
         stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        strokeOpacity="0.3"
+      />
+      <circle 
+        cx="16" 
+        cy="7" 
+        r="1" 
+        fill="currentColor" 
+        fillOpacity="0.2"
+      />
+      <circle 
+        cx="14" 
+        cy="10" 
+        r="0.5" 
+        fill="currentColor" 
+        fillOpacity="0.1"
       />
     </svg>
   );
