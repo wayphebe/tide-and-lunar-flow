@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
@@ -35,11 +34,20 @@ const DayCell = ({
 }: DayCellProps) => {
   const dateString = format(date, "yyyy-MM-dd");
   
-  const getTideStatus = () => {
+  const getTideSurfStatus = () => {
     if (!tides?.length) return null;
-    const highTides = tides.filter(t => t.isHighTide).length;
-    const lowTides = tides.filter(t => !t.isHighTide).length;
-    return `${highTides} 涨潮 · ${lowTides} 退潮`;
+    
+    // Get the highest tide of the day
+    const maxTide = Math.max(...tides.map(t => t.height));
+    // Get the lowest tide of the day
+    const minTide = Math.min(...tides.map(t => t.height));
+    // Calculate the tide range
+    const tideRange = maxTide - minTide;
+    
+    // Simple surf condition assessment based on tide range
+    if (tideRange > 1.5) return "🏄‍♂️ Good"; // Good surf conditions with significant tide change
+    if (tideRange > 0.8) return "👌 Fair"; // Moderate conditions
+    return "🌊 Flat"; // Not ideal for surfing
   };
 
   return (
@@ -78,33 +86,13 @@ const DayCell = ({
       {isCurrentMonth && tides && tides.length > 0 && (
         <Tooltip>
           <TooltipTrigger asChild>
-            <Link to={`/tide/${dateString}`} className="mt-2 flex flex-col items-center">
-              <div className="text-xs text-muted-foreground">{getTideStatus()}</div>
-              <div className="flex space-x-1 mt-1">
-                {tides.map((tide, index) => (
-                  <div 
-                    key={index}
-                    className={cn(
-                      "h-1 w-1 rounded-full transition-all duration-200",
-                      tide.isHighTide 
-                        ? "bg-ocean hover:bg-ocean/80" 
-                        : "bg-ocean-light hover:bg-ocean-light/80"
-                    )}
-                  />
-                ))}
-              </div>
+            <Link to={`/tide/${dateString}`} className="mt-2 flex items-center justify-center">
+              <div className="text-xs font-medium">{getTideSurfStatus()}</div>
             </Link>
           </TooltipTrigger>
           <TooltipContent>
-            <div className="space-y-1">
-              {tides.map((tide, index) => (
-                <div key={index} className="flex items-center justify-between text-xs">
-                  <span>{tide.isHighTide ? "涨潮" : "退潮"}</span>
-                  <span className="ml-2 text-muted-foreground">
-                    {tide.time} ({tide.height.toFixed(1)}m)
-                  </span>
-                </div>
-              ))}
+            <div className="text-sm">
+              潮差: {(Math.max(...tides.map(t => t.height)) - Math.min(...tides.map(t => t.height))).toFixed(1)}m
             </div>
           </TooltipContent>
         </Tooltip>
