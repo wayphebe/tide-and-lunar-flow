@@ -9,14 +9,22 @@ export const MoonIcon = ({ className }: MoonIconProps) => {
   return (
     <svg 
       viewBox="0 0 24 24" 
-      fill="none" 
       xmlns="http://www.w3.org/2000/svg"
       className={cn("w-6 h-6", className)}
     >
+      <defs>
+        <linearGradient id="moonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="currentColor" stopOpacity="0.3" />
+          <stop offset="100%" stopColor="currentColor" stopOpacity="0.8" />
+        </linearGradient>
+      </defs>
       <path 
-        d="M12 22C17.5228 22 22 17.5228 22 12C22 11.5373 21.3065 11.4608 21.0672 11.8568C19.9289 13.7406 17.8615 15 15.5 15C11.9101 15 9 12.0899 9 8.5C9 6.13845 10.2594 4.07105 12.1432 2.93276C12.5392 2.69347 12.4627 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" 
-        fill="currentColor"
-        className="opacity-80"
+        d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+        fill="url(#moonGradient)"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
