@@ -1,7 +1,7 @@
 
 import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { format, addDays, subDays } from "date-fns";
+import { format, addDays, subDays, isValid, parseISO } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { MoonPhaseDisplay } from "@/components/MoonPhaseDisplay";
@@ -16,22 +16,51 @@ const MoonPhaseDetails = () => {
     phase: ReturnType<typeof calculateMoonPhase>;
     riseSet: { rise: string; set: string };
   } | null>(null);
+  const [error, setError] = useState<string | null>(null);
   
   useEffect(() => {
     if (date && currentLocation) {
-      const dateObj = new Date(date);
-      const phase = calculateMoonPhase(dateObj);
-      const riseSet = getMoonRiseSet(dateObj, currentLocation.latitude, currentLocation.longitude);
-      
-      setMoonData({ phase, riseSet });
+      try {
+        // Parse and validate date
+        const dateObj = parseISO(date);
+        if (!isValid(dateObj)) {
+          setError(`Invalid date format: ${date}`);
+          return;
+        }
+        
+        const phase = calculateMoonPhase(dateObj);
+        const riseSet = getMoonRiseSet(dateObj, currentLocation.latitude, currentLocation.longitude);
+        
+        setMoonData({ phase, riseSet });
+        setError(null);
+      } catch (err) {
+        console.error("Error loading moon data:", err);
+        setError("Failed to load moon phase data. Please try a different date.");
+      }
     }
   }, [date, currentLocation]);
   
-  if (!date || !currentLocation || !moonData) {
+  if (!date || !currentLocation) {
+    return <div className="text-center py-8">请选择位置和日期</div>;
+  }
+  
+  if (error) {
+    return <div className="text-center py-8 text-red-500">{error}</div>;
+  }
+  
+  if (!moonData) {
     return <div className="text-center py-8">加载中...</div>;
   }
   
-  const dateObj = new Date(date);
+  // Parse date safely
+  let dateObj: Date;
+  try {
+    dateObj = parseISO(date);
+    if (!isValid(dateObj)) throw new Error("Invalid date");
+  } catch (e) {
+    return <div className="text-center py-8 text-red-500">日期格式无效</div>;
+  }
+  
   const formattedDate = format(dateObj, "yyyy年MM月dd日");
   const prevDate = format(subDays(dateObj, 1), "yyyy-MM-dd");
   const nextDate = format(addDays(dateObj, 1), "yyyy-MM-dd");
