@@ -70,33 +70,6 @@ export const LocationSelector = () => {
         </DropdownMenuItem>
         <DropdownMenuItem 
           onClick={() => setCurrentLocation({
-            name: "北京",
-            latitude: 39.9042,
-            longitude: 116.4074
-          })}
-        >
-          北京
-        </DropdownMenuItem>
-        <DropdownMenuItem 
-          onClick={() => setCurrentLocation({
-            name: "上海",
-            latitude: 31.2304,
-            longitude: 121.4737
-          })}
-        >
-          上海
-        </DropdownMenuItem>
-        <DropdownMenuItem 
-          onClick={() => setCurrentLocation({
-            name: "广州",
-            latitude: 23.1291,
-            longitude: 113.2644
-          })}
-        >
-          广州
-        </DropdownMenuItem>
-        <DropdownMenuItem 
-          onClick={() => setCurrentLocation({
             name: "青岛",
             latitude: 36.0671,
             longitude: 120.3826
@@ -104,7 +77,35 @@ export const LocationSelector = () => {
         >
           青岛
         </DropdownMenuItem>
+        <DropdownMenuItem 
+          onClick={() => setCurrentLocation({
+            name: "汕头",
+            latitude: 23.3535,
+            longitude: 116.6820
+          })}
+        >
+          汕头
+        </DropdownMenuItem>
+        <DropdownMenuItem 
+          onClick={() => setCurrentLocation({
+            name: "厦门",
+            latitude: 24.4798,
+            longitude: 118.0894
+          })}
+        >
+          厦门
+        </DropdownMenuItem>
+        <DropdownMenuItem 
+          onClick={() => setCurrentLocation({
+            name: "深圳",
+            latitude: 22.5431,
+            longitude: 114.0579
+          })}
+        >
+          深圳
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
 };
+
